@@ -1,118 +1,111 @@
 # https://medium.com/@amannagpal4/how-to-create-your-own-decentralized-file-sharing-service-using-python-2e00005bdc4a
-# https://github.com/Ezi0aaudit0re/P2P-music-sharing/blob/master/server_client/client.py
-"""
-    This file takes part of the server side of the peer to peer network
-    This file deals with uploading of the song for other peers
-"""
+# derived from code from DeepSeek + edited
 
-from constants_p2p import *
-
-__author__ = "Aman Nagpal"
-
+import socket
+import threading
+import json
 
 class Server:
 
-    def __init__(self, msg):
-        try:
-            # the message to upload in bytes
-            self.msg = msg
+    # constructor
+    def __init__(self, port, message_handler):
+        self.port = port
+        self.message_handler = message_handler
 
-            # define a socket
-            self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    # start server and listen for new peer connections
+    def start_server(self):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
+            server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # to reuse ports if needed
+            server_socket.bind(('0.0.0.0', self.port))
+            server_socket.listen()
 
-            self.connections = []
-
-            # make a list of peers
-            self.peers = []
-
-            # bind the socket
-            self.s.bind((HOST, PORT))
-
-            # listen for connection
-            self.s.listen(1)
-
-            print("-" * 12 + "Server Running" + "-" * 21)
-
-            self.run()
-        except Exception as e:
-            sys.exit()
-
-    """
-    This method deals with sending info to the clients 
-    This methods also closes the connection if the client has left
-    :param: connection -> The connection server is connected to 
-    :param: a -> (ip address, port) of the system connected
-    """
-
-    def handler(self, connection, a):
-
-        try:
+            # complete connection with handshake
             while True:
-                # server recieves the message
-                data = connection.recv(BYTE_SIZE)
-                for connection in self.connections:
+                try:
+                    conn, addr = server_socket.accept()
+                    # start new thread
+                    thread = threading.Thread(target=self.handle_client, args=(conn, addr))
+                    thread.start()
+                except:
+                    break
 
-                    # The peer that is connected wants to disconnect
-                    if data and data.decode('utf-8')[0].lower() == 'q':
-
-                        # disconnect the peer
-                        self.disconnect(connection, a)
-                        return
-                    elif data and data.decode('utf-8') == REQUEST_STRING:
-                        print("-" * 21 + " UPLOADING " + "-" * 21)
-                        # if the connection is still active we send it back the data
-                        # this part deals with uploading of the file
-                        connection.send(self.msg)
-                        # convert_to_music(self.msg)
-        except Exception as e:
-            sys.exit()
-
-    """
-        This method is run when the user disconencts
-    """
-
-    def disconnect(self, connection, a):
-        self.connections.remove(connection)
-        self.peers.remove(a)
-        connection.close()
-        self.send_peers()
-        print("{}, disconnected".format(a))
-        print("-" * 50)
-
-    """
-        This method is use to run the server
-        This method creates a different thread for each client
-    """
-
-    def run(self):
-        # constantly listeen for connections
+    # handle new connections
+    def handle_client(self, conn, addr):
         while True:
-            connection, a = self.s.accept()
+            try:
+                data = conn.recv(1024).decode('utf-8')
+                if not data:
+                    break
 
-            # append to the list of peers
-            self.peers.append(a)
-            print("Peers are: {}".format(self.peers))
-            self.send_peers()
-            # create a thread for a connection
-            c_thread = threading.Thread(target=self.handler, args=(connection, a))
-            c_thread.daemon = True
-            c_thread.start()
-            self.connections.append(connection)
-            print("{}, connected".format(a))
-            print("-" * 50)
+                # decode data
+                message = json.loads(data.decode('utf-8'))
+                self.message_handler(message, addr)
+            except Exception as e:
+                print(f"ERROR WITH CONNECTION: {e}")
 
-    """
-        send a list of peers to all the peers that are connected to the server
-    """
+        # disconnect if connection error
+        print(f"DISCONNECTED FROM {addr}")
+        conn.close()
 
-    def send_peers(self):
-        peer_list = ""
-        for peer in self.peers:
-            peer_list = peer_list + str(peer[0]) + ","
 
-        for connection in self.connections:
-            # we add a byte '\x11' at the begning of the our byte
-            # This way we can differentiate if we recieved a message or a a list of peers
-            data = PEER_BYTE_DIFFERENTIATOR + bytes(peer_list, 'utf-8')
-            connection.send(PEER_BYTE_DIFFERENTIATOR + bytes(peer_list, 'utf-8'))
+# import socket
+# import threading
+# import json # for database functionality
+# from datetime import datetime # for logging
+#
+# class Server:
+#
+#     # constructor
+#     def __init__(self, port, message_handler):
+#         self.port = port
+#         self.message_handler = message_handler
+#         self.running = False
+#         self.server_thread = None
+#
+#     # start "server" and listen for connections
+#     def start(self):
+#         self.running = True
+#         self.server_thread = threading.Thread(target=self.run_server)
+#         self.server_thread.start()
+#
+#     # stop server
+#     def stop(self):
+#         self.running = False
+#         # Create a dummy connection to unblock the accept() call
+#         try:
+#             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+#                 s.connect(('127.0.0.1', self.port))
+#         except:
+#             pass
+#
+#         if self.server_thread:
+#             self.server_thread.join()
+#
+#     # main server loop that listens for connections
+#     def run_server(self):
+#         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+#             s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+#             s.bind(('0.0.0.0', self.port))
+#             s.listen()
+#
+#             while self.running:
+#                 try:
+#                     conn, addr = s.accept() # accept the connection
+#                     threading.Thread(target=self.handle_connection, args=(conn, addr)).start() # run the connection on thread
+#                 except:
+#                     break
+#
+#     # this fxn handles new connections
+#     def handle_connection(self, conn, addr):
+#         try:
+#             data = conn.recv(4096)
+#             if not data:
+#                 return
+#
+#             message = json.loads(data.decode('utf-8')) # decode data
+#             self.message_handler(message, addr)
+#
+#         except Exception as e:
+#             print(f"Error handling connection: {e}")
+#         finally:
+#             conn.close()
