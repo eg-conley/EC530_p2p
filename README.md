@@ -56,3 +56,6 @@ EC530_p2p/ \
 * Transfer data to proper database
 * Create UI
 * Design message notification protocol, automation
+
+## Acknowledgements
+* Code derived from DeepSeek and edited for use
