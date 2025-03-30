@@ -4,19 +4,19 @@
  1. [Overview](#overview)
  2. [File Structure](#file-structure)
  3. [How to Use](#how-to-use)
- 4. [Future Improvements](#h2-future-improvements)
+ 4. [Future Improvements](#future-improvements)
 
-## 1. Overview
+## Overview
 
-## 2. File Structure
+## File Structure
 
-## 3. How to Use
+## How to Use
 this
 is
 a
 test
 
-## 4. Future Improvements
+## Future Improvements
 this
 is
 a
