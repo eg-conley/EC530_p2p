@@ -1,7 +1,6 @@
 # https://medium.com/@amannagpal4/how-to-create-your-own-decentralized-file-sharing-service-using-python-2e00005bdc4a
 # derived from code from DeepSeek + edited
 
-
 import socket
 import json
 
