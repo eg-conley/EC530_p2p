@@ -1,4 +1,5 @@
 # Peer-to-Peer Chat Application
+An interactive chat application using peer-to-peer networking.
 
 ## Table of Contents
  1. [Overview](#overview)
@@ -7,6 +8,7 @@
  4. [Future Improvements](#future-improvements)
 
 ## Overview
+
 
 ## File Structure
 
