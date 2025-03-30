@@ -2,81 +2,41 @@
 # derived from code from DeepSeek + edited
 
 
-# import socket
-# import json
-#
-# class Client:
-#
-#     @staticmethod
-#     def connect_to_peer(ip, port, peer_id, local_port):
-#         try:
-#             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-#                 sock.connect((ip, port))
-#
-#                 # send handshake first to establish connection
-#                 handshake = {
-#                 'type': 'handshake',
-#                 'peer_id': peer_id,
-#                 'port': local_port
-#                 }
-#                 sock.sendall(json.dumps(handshake).encode('utf-8'))
-#
-#                 # wait for response
-#                 data = sock.recv(4096)
-#                 return json.loads(data.decode('utf-8')) # return the response
-#
-#         except Exception as e:
-#             print(f"ERROR CONNECTING TO PEER: {e}")
-#             return None
-#
-#     @staticmethod
-#     # send message to a specific peer
-#     def send_message(ip, port, message):
-#         try:
-#             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
-#                 client_socket.connect((ip, port))
-#                 client_socket.sendall(json.dumps(message).encode('utf-8'))
-#                 return True
-#         except Exception as e:
-#             print(f"ERROR SENDING MESSAGE: {e}")
-#             return False
-
 import socket
 import json
-from datetime import datetime
 
 class Client:
+
     @staticmethod
-    # establish connection with peer
     def connect_to_peer(ip, port, peer_id, local_port):
         try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((ip, port))
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                sock.connect((ip, port))
 
-                # Send handshake
+                # send handshake first to establish connection
                 handshake = {
-                    'type': 'handshake',
-                    'peer_id': peer_id,
-                    'port': local_port
+                'type': 'handshake',
+                'peer_id': peer_id,
+                'port': local_port
                 }
-                s.sendall(json.dumps(handshake).encode())
+                sock.sendall(json.dumps(handshake).encode('utf-8'))
 
-                # Wait for response
-                data = s.recv(4096)
-                return json.loads(data.decode())
+                # wait for response
+                data = sock.recv(4096)
+                return json.loads(data.decode('utf-8')) # return the response
 
         except Exception as e:
-            print(f"Failed to connect to peer: {e}")
+            print(f"ERROR CONNECTING TO PEER: {e}")
             return None
 
     @staticmethod
-    # send message to peer
-    def send_message(ip, port, message_data):
+    # send message to a specific peer
+    def send_message(ip, port, message):
         try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((ip, port))
-                s.sendall(json.dumps(message_data).encode())
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+                client_socket.connect((ip, port))
+                client_socket.sendall(json.dumps(message).encode('utf-8'))
                 return True
         except Exception as e:
-            print(f"Failed to send message: {e}")
+            print(f"ERROR SENDING MESSAGE: {e}")
             return False
