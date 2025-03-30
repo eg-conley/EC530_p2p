@@ -1,4 +1,4 @@
-# Peer-to-Peer Chat Application
+# Peer-to-Peer Chat Application 💬
 
 ## Table of Contents
  1. [Overview](#overview)
@@ -29,7 +29,7 @@ EC530_p2p/ \
 |-- client_p2p.py # "client" side of p2p \
 |-- main.py # main application to run \
 |-- message_data.py # handles + stores message data \
-|-- server_p2p.py # "server" side of p2p \
+|-- server_p2p.py # "server" side of p2p
 
 ## How to Use
 ### Requirements
@@ -44,14 +44,14 @@ EC530_p2p/ \
  4. Run python3 main.py [port] (in virtual environment)
 
 ### Example Use
-In Terminal 1: python3 main.py 6000
-  * This will pull up the options menu for user 1
-In Terminal 2: python3 main.py 6001
-  * This will pull up the options menu for user 2
-In Terminal 1: type [1] to connect to another peer
-  * You will be prompted to enter the ip address (127.0.0.1) and port (6001) to connect to user 2
-  * You will connect to user 2 and can now send chats by entering [2]
-
+ * In Terminal 1: python3 main.py 6000
+    * This will pull up the options menu for user 1
+ * In Terminal 2: python3 main.py 6001
+    * This will pull up the options menu for user 2
+ * In Terminal 1: type [1] to connect to another peer
+   * You will be prompted to enter the ip address (127.0.0.1) and port (6001) to connect to user 2
+   * You will connect to user 2 and can now send chats by entering [2]
+  
 ## Future Improvements
 * Transfer data to proper database
 * Create a UI
