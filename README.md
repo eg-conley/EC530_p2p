@@ -1,5 +1,4 @@
 # Peer-to-Peer Chat Application
-An interactive chat application using peer-to-peer networking.
 
 ## Table of Contents
  1. [Overview](#overview)
@@ -8,7 +7,7 @@ An interactive chat application using peer-to-peer networking.
  4. [Future Improvements](#future-improvements)
 
 ## Overview
-This chat application 
+This application allows users to send messages to friends identified by peer IDs, which are structured as chat_data_peer_[port]_[8-digit hex code]. 
 
 ### Features
 * Data is distrubted and not stored in a central server
@@ -17,11 +16,11 @@ This chat application
 * Key is different between chats
 
 ### Menu Options
- 1. CONNECT TO PEER
- 2. SEND CHAT
- 3. CHAT HISTORY
- 4. LIST PEERS
- 5. EXIT
+ 1. CONNECT TO PEER: Connect to another user specified by _peer IP_ and _port_
+ 2. SEND CHAT: Send chat to another user specified by _peer ID_
+ 3. CHAT HISTORY: Show chat history between user specified by _peer ID_
+ 4. LIST PEERS: Show a list of connected peers
+ 5. EXIT: Exit the application
 
 ## File Structure
 EC530_p2p/ \
