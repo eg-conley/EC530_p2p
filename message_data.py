@@ -12,10 +12,10 @@ class MessageData:
         os.makedirs(self.data_dir, exist_ok=True)
         self.messages = {}
         self.peers = {}
-        self._load_messages()
+        self.load_messages()
 
     # load messages from disk
-    def _load_messages(self):
+    def load_messages(self):
         for filename in os.listdir(self.data_dir):
             if filename.endswith('.json'):
                 peer_id = filename[:-5]
