@@ -54,4 +54,5 @@ EC530_p2p/ \
   
 ## Future Improvements
 * Transfer data to proper database
-* Create a UI
+* Create UI
+* Design message notification protocol, automation
