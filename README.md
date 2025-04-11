@@ -9,13 +9,13 @@
 ## Overview
 This application allows users to send messages to friends identified by peer IDs, which are structured as chat_data_peer_[port]_[8-digit hex code]. 
 
-### Features
+## Features
 * Data is distrubted and not stored in a central server
 * Local data is stored on the clients
 * Data stored on the device is non-volatile
 * Key is different between chats
 
-### Menu Options
+## Menu Options
  1. CONNECT TO PEER: Connect to another user specified by _peer IP_ and _port_
  2. SEND CHAT: Send chat to another user specified by _peer ID_
  3. CHAT HISTORY: Show chat history between user specified by _peer ID_
@@ -25,7 +25,7 @@ This application allows users to send messages to friends identified by peer IDs
 ## File Structure
 EC530_p2p/ \
 |--client_server # files for testing client-server architecture, not needed to run \
-  |--... \
+&nbsp;&nbsp;&nbsp;|--... \
 |-- client_p2p.py # "client" side of p2p \
 |-- main.py # main application to run \
 |-- message_data.py # handles + stores message data \
