@@ -40,7 +40,7 @@ EC530_p2p/ \
 ### Steps
  1. Clone the repository
  2. Navigate to the directory containing the files
- 3. Open a terminal/shel
+ 3. Open a terminal/shell
  4. Run python3 main.py [port] (in virtual environment)
 
 ### Example Use
