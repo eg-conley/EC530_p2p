@@ -2,9 +2,12 @@
 
 ## Table of Contents
  1. [Overview](#overview)
- 2. [File Structure](#file-structure)
- 3. [How to Use](#how-to-use)
- 4. [Future Improvements](#future-improvements)
+ 2. [Features](#features)
+ 3. [Menu Options](#menu-options)
+ 4. [File Structure](#file-structure)
+ 5. [How to Use](#how-to-use)
+ 6. [Future Improvements](#future-improvements)
+ 7. [Acknowledgements](#acknowledgements)
 
 ## Overview
 This application allows users to send messages to friends identified by peer IDs, which are structured as chat_data_peer_[port]_[8-digit hex code]. 
